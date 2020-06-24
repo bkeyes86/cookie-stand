@@ -260,8 +260,17 @@ function renderAllShops() {
   }
 };
 
-
-
+function Shop(minCustPerHour,maxCustPerHour, avgCookiesPerSale) {
+  this.name;
+  this.minCustPerHour = minCustPerHour;
+  this.maxCustPerHour = maxCustPerHour;
+  this.avgCookiesPerSale= avgCookiesPerSale;
+}
+var seattleShop = new Shop ('Seattle', 23, 65, 6.3);
+var tokyoShop = new Shop ('Tokyo', 3, 24, 1.2);
+var dubaiShop = new Shop ('Dubai', 11, 38, 3.7);
+var parisShop = new Shop ('Paris', 20, 38, 2.3);
+var limashop = new Shop ('Lima', 2, 16, 4.6);
 
 
 
