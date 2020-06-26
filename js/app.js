@@ -12,7 +12,7 @@ console.log('app.js is connected.');
 // Calculating the sum of these hourly totals; your output for each location should look like this:
 
 
-var storehours = ['6am' , '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+var storeHours = ['6am' , '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 //console.log(global var for store hours)
 
 
@@ -276,48 +276,89 @@ var storehours = ['6am' , '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2
 
 
 
-function Shop(minCustPerHour,maxCustPerHour, avgCookiesPerSale, customersEachHour, cookiesEachHour, totalDailyCookies) {
-  this.name;
-  this.minCustPerHour = minCustPerHour;
-  this.maxCustPerHour = maxCustPerHour;
-  this.avgCookiesPerSale = avgCookiesPerSale;
-  this.customersEachHour = [];
-  this.cookiesEachHour = [];
-  this.totalDailyCookies = 0;
-  
-}
 function random(min, max){
   return Math.floor(Math.random() * (max - min + 1))+ min;
 }
-Shop.prototype.getCustEachHour = function(){
-  var randomIndex = (Math.random() * this.customersEachHour.length);
-  return this.customersEachHour[i];
-};
-Shop.prototype.getCookieEachHour = function(){
-  var randomIndex = Math.floor(Math.random() * this.cookiesEachHour.length);
-  return this.cookiesEachHour[i];
-};
-Shop.prototype.render = function(){
-  var parentElement = document.getElementById('shopCookies');
-  var article = document.createElement('article'); parentElement.appendChild(article);
-  var h2 = document.createElement('h2');
-  h2.textContent = this.name;
-  article.appendChild(h2);
-  var shopPara = document.createElement('p');
-  
-
-
+function Shop(name, minCustPerHour,maxCustPerHour, avgCookiesPerSale) {
+  this.shopName = name;
+  this.minCustPerHour = minCustPerHour;
+  this.maxCustPerHour = maxCustPerHour;
+  this.avgCookies = avgCookiesPerSale;
+  this.customersEachHour = [];
+  this.cookiesEachHour = [];
+ 
 }
+Shop.prototype.getCustPerHour = function(){
+  for(var i = 0; i < storeHours.length; i++) {
+    this.customersEachHour[i] = random(this.minCustPerHour, this.maxCustPerHour);
+  }
+};
+Shop.prototype.getCookiePerHour = function(){
+  this.getCustPerHour();
+  for(var i = 0; i < this.customersEachHour.length; i++) {
+    this.cookiesEachHour[i] = Math.floor(this.customersEachHour[i] * this.avgCookies);
+  }
+  console.log(this.cookiesEachHour)
+};
+Shop.prototype.totalDailyCookies = function(){
+  this.getCookiePerHour()
+  var totalCookies = 0;
+  for(var i = 0; i < this.cookiesEachHour.length; i++){
+    totalCookies += this.cookiesEachHour[i]
+  }
+  return totalCookies;
+}
+Shop.prototype.render = function(){
+  this.getCookiePerHour()
+  var shopTable = document.getElementById('shop-table');
+  var shopRow = document.createElement('tr');
+  var shopName = document.createElement('td');
+  shopName.textContent = this.shopName;
+  shopRow.appendChild(shopName)
+  shopTable.appendChild(shopRow);
+  console.log(shopTable)
+
+  
+  for(var i = 0; i < storeHours.length; i++){
+    var td = document.createElement('td')
+    td.textContent = this.cookiesEachHour[i]
+    shopRow.appendChild(td)
+    console.log('you are here', this.cookiesEachHour[i])
+
+
+  }
+  var tdTotal = document.createElement('td')
+  tdTotal.textContent = this.totalDailyCookies()
+  shopRow.appendChild(tdTotal)
+};
+
 var seattleShop = new Shop ('Seattle', 23, 65, 6.3);
 var tokyoShop = new Shop ('Tokyo', 3, 24, 1.2);
 var dubaiShop = new Shop ('Dubai', 11, 38, 3.7);
 var parisShop = new Shop ('Paris', 20, 38, 2.3);
 var limashop = new Shop ('Lima', 2, 16, 4.6);
+var allShops = [seattleShop, tokyoShop, dubaiShop, parisShop, limashop];
+for(var i = 0; i < allShops.length; i++){
+  allShops[i].render();
+}
+
+function handleFormSubmitted(event){
+
+event.preventDefault();
+var nameInput = document.getElementById('name');
+var nameValue = nameInput['value'];
+var minCustPerHourInput = document.getElementById('minCustPerHour');
+var minCustPerHourValue = minCustPerHourInput['value'];
+var maxCustPerHourInput = document.getElementById('maxCustPerHour');
+var maxCustPerHourValue = maxCustPerHourInput['value'];
+var newShop = new Shop(nameValue,minCustPerHourValue, maxCustPerHourValue)
 
 
+newShop.render();
 
-
-
+}
+var form = document.getElementById('new-shops')
+formElement.addEventListener('submit', handleFormSubmitted);
 
 
 

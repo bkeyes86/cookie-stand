@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/mainstyle.css"
+    <link rel="stylesheet" href="css/mainstyle.css">
   </head>
   <body>
     <header>Pat's Salmon Cookies</header>
@@ -19,7 +19,7 @@
     <img src="css/images/frosted-cookie.jpg" alt="frosted cookie">
     <img src="css/images/salmon.png" alt= "salmon">
     <img src="css/images/shirt.jpg1" alt= "shirt">
-    <a href="sales.html">Sales</a>
+    <!-- <a href="sales.html">Sales</a> -->
     <section>
       <h1>Locations</h1>
       <ul>
@@ -32,6 +32,20 @@
       <h2>Hours of Operation</h2>
       <h3>6am-7pm</h3>
     </section>
+    <form id="new-shops">
+      <fieldset>
+        <legend>Add A New Store</legend>
+        <label for="name">Shop name</label>
+        <input id="name" type="text"/>
+        <label for="minCustPerHour">Min Customers Per Hour</label>
+        <input id="minCustPerHour" type="text"/>
+        <label for="maxCustPerHour">Max Customers Per Hour</label>
+        <input id="maxCustPerHour" type="text"/>
+        <label for="avgCookiesPerSale">Avg Cookies Per Sale</label>
+        <input id="avgCookiesPerSale" type="text"/>
+      </fieldset>
+      <button type="submit">Click to add new shop!</button>
+    </form>
 
     
     <script src="js/app.js"></script>
