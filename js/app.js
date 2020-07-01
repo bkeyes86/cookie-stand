@@ -13,7 +13,6 @@ console.log('app.js is connected.');
 
 
 var storeHours = ['6am' , '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
-//console.log(global var for store hours)
 
 
 
@@ -39,14 +38,17 @@ function Shop(name, minCustPerHour,maxCustPerHour, avgCookiesPerSale) {
 Shop.prototype.getCustPerHour = function(){
   for(var i = 0; i < storeHours.length; i++) {
     this.customersEachHour[i] = random(this.minCustPerHour, this.maxCustPerHour);
+    
   }
 };
 Shop.prototype.getCookiePerHour = function(){
   this.getCustPerHour();
+  
   for(var i = 0; i < this.customersEachHour.length; i++) {
     this.cookiesEachHour[i] = Math.floor(this.customersEachHour[i] * this.avgCookies);
+    
   }
-  console.log(this.cookiesEachHour)
+ 
 };
 Shop.prototype.totalDailyCookies = function(){
   this.getCookiePerHour()
@@ -64,7 +66,7 @@ Shop.prototype.render = function(){
   shopName.textContent = this.shopName;
   shopRow.appendChild(shopName)
   shopTable.appendChild(shopRow);
-  console.log(shopTable)
+  
 
   
     
@@ -75,8 +77,7 @@ Shop.prototype.render = function(){
     var td = document.createElement('td')
     td.textContent = this.cookiesEachHour[i]
     shopRow.appendChild(td)
-    console.log('you are here', this.cookiesEachHour[i])
-
+   
 
   }
   var tdTotal = document.createElement('td')
@@ -84,9 +85,7 @@ Shop.prototype.render = function(){
   shopRow.appendChild(tdTotal)
 }
 var th = document.createElement('th')
-    td.textContent = this.storeHours[i]
-    shopRow.appendChild(shopTable)
-
+    
 var seattleShop = new Shop ('Seattle', 23, 65, 6.3);
 var tokyoShop = new Shop ('Tokyo', 3, 24, 1.2);
 var dubaiShop = new Shop ('Dubai', 11, 38, 3.7);
@@ -103,16 +102,18 @@ event.preventDefault();
 var nameInput = document.getElementById('name');
 var nameValue = nameInput['value'];
 var minCustPerHourInput = document.getElementById('minCustPerHour');
-var minCustPerHourValue = minCustPerHourInput['value'];
+var minCustPerHourValue = Number(minCustPerHourInput['value']);
 var maxCustPerHourInput = document.getElementById('maxCustPerHour');
-var maxCustPerHourValue = maxCustPerHourInput['value'];
-var newShop = new Shop(nameValue,minCustPerHourValue, maxCustPerHourValue)
+var maxCustPerHourValue = Number(maxCustPerHourInput['value']);
+var avgCookiesPerSaleInput = document.getElementById('avgCookiesPerSale');
+var avgCookiesPerSaleValue = Number(avgCookiesPerSaleInput['value']);
+var newShop = new Shop(nameValue,minCustPerHourValue, maxCustPerHourValue, avgCookiesPerSaleValue);
 
 
 newShop.render();
 
 }
-var form = document.getElementById('new-shops')
+var formElement = document.getElementById('new-shops')
 formElement.addEventListener('submit', handleFormSubmitted);
 
 
